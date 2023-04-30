@@ -1,18 +1,20 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-parcelize'
+    id 'com.google.gms.google-services'
 }
 
 android {
     namespace 'com.volokhinaleksey.take_are_of_your_health'
-    compileSdk 33
+    compileSdk Config.compileSdk
 
     defaultConfig {
-        applicationId "com.volokhinaleksey.take_are_of_your_health"
-        minSdk 27
-        targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        applicationId Config.applicationId
+        minSdk Config.minSdk
+        targetSdk Config.targetSdk
+        versionCode Releases.versionCode
+        versionName Releases.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -27,8 +29,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility Config.INSTANCE.javaVersion
+        targetCompatibility Config.INSTANCE.javaVersion
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -47,20 +49,34 @@ android {
 }
 
 dependencies {
+    // Compose
+    implementation platform(Compose.composeBom)
+    implementation Compose.composeMaterial3
+    implementation Compose.composeUi
+    implementation Compose.composeUiTooling
+    implementation Compose.composeActivity
+    implementation Compose.composeViewModel
+    implementation Compose.composeLiveData
 
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
-    implementation 'androidx.activity:activity-compose:1.5.1'
-    implementation platform('androidx.compose:compose-bom:2022.10.00')
-    implementation 'androidx.compose.ui:ui'
-    implementation 'androidx.compose.ui:ui-graphics'
-    implementation 'androidx.compose.ui:ui-tooling-preview'
-    implementation 'androidx.compose.material3:material3'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation platform('androidx.compose:compose-bom:2022.10.00')
-    androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
-    debugImplementation 'androidx.compose.ui:ui-tooling'
-    debugImplementation 'androidx.compose.ui:ui-test-manifest'
+    // Lifecycle
+    implementation Lifecycle.livedata
+    implementation Lifecycle.viewModel
+
+    // Koin
+    implementation Koin.koinCore
+    implementation Koin.koinAndroid
+    implementation Koin.composeKoin
+
+    // Coroutines
+    implementation Coroutines.coroutinesCore
+    implementation Coroutines.coroutinesAndroid
+
+    // Android
+    implementation Android.androidCore
+    implementation Firebase.firebaseDatabase
+
+    // Tests
+    testImplementation Tests.junit
+    androidTestImplementation Tests.extJunit
+    androidTestImplementation Tests.espressoCore
 }
